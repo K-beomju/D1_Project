@@ -31,12 +31,25 @@ public class UI_TitleScene : UI_Scene
         GetObject((int)GameObjects.StartImage).gameObject.SetActive(false);
         GetText((int)Texts.DisplayText).text = $"";
 
+        StartLoadAssets();
         return true;
     }
 
-    public void LoadComplateUI()
+    private void StartLoadAssets()
     {
-        GetObject((int)GameObjects.StartImage).gameObject.SetActive(true);
-        GetText((int)Texts.DisplayText).text = $"Touch to Start";
+        Managers.Resource.LoadAllAsync<Object>("PreLoad", (key, count, totalCount) =>
+        {
+            Debug.Log($"{key} {count}/{totalCount}");
+
+            if (count == totalCount)
+            {
+                Debug.Log("Addressable All Load Complete");
+                Managers.Data.Init();
+                
+                GetObject((int)GameObjects.StartImage).gameObject.SetActive(true);
+                GetText((int)Texts.DisplayText).text = $"Touch to Start";
+            }
+        });
     }
+ 
 }
