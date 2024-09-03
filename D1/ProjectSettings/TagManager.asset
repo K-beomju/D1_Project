@@ -8,9 +8,16 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Dummy1
   - Water
   - UI
+  - Hero
+  - Monster
+  - Boss
+  - 
+  - 
+  - Env
+  - Obstacle
   - 
   - 
   - 
@@ -18,14 +25,7 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Projectile
   - 
   - 
   - 
@@ -40,4 +40,16 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Creature
+    uniqueID: 1276076335
+    locked: 0
+  - name: PROJECTILE
+    uniqueID: 1242837247
+    locked: 0
+  - name: SKILL_EFFECT
+    uniqueID: 2329899625
+    locked: 0
+  - name: DAMAGE_FONT
+    uniqueID: 722511747
     locked: 0

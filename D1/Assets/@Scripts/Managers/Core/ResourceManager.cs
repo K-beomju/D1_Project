@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.U2D;
 using Object = UnityEngine.Object;
 
 public class ResourceManager
@@ -124,6 +125,7 @@ public class ResourceManager
 			{
 				if (result.PrimaryKey.Contains(".sprite"))
 				{
+					Debug.Log("ASD");
 					LoadAsync<Sprite>(result.PrimaryKey, (obj) =>
 					{
 						loadCount++;

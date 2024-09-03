@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Newtonsoft.Json;
+using Data;
 
 public interface ILoader<Key, Value>
 {
@@ -11,11 +12,11 @@ public interface ILoader<Key, Value>
 
 public class DataManager
 {
-    public Dictionary<int, Data.TestData> TestDic { get; private set; } = new Dictionary<int, Data.TestData>();
+    public Dictionary<int, HeroInfoData> HeroInfoDic { get; private set; } = new Dictionary<int, HeroInfoData>();
 
     public void Init()
     {
-        TestDic = LoadJson<Data.TestDataLoader, int, Data.TestData>("TestData").MakeDict();
+        HeroInfoDic = LoadJson<HeroInfoDataLoader, int, HeroInfoData>("HeroInfoData").MakeDict();
     }
 
     private Loader LoadJson<Loader, Key, Value>(string path) where Loader : ILoader<Key, Value>

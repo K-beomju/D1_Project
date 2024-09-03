@@ -4,8 +4,20 @@ using UnityEngine;
 
 public class Managers : MonoBehaviour
 {
-    private static Managers s_instacnce;
-    private static Managers Instance { get { Init(); return s_instacnce; } }
+    public static bool Initialized { get; set; } = false;
+
+    private static Managers s_instance;
+    private static Managers Instance { get { Init(); return s_instance; } }
+
+    #region Content
+    private GameManager _game = new GameManager();
+    private ObjectManager _object = new ObjectManager();
+    private MapManager _map = new MapManager();
+
+    public static GameManager Game { get { return Instance?._game; ; } }
+    public static ObjectManager Object { get { return Instance?._object; } }
+    public static MapManager Map { get { return Instance?._map; } }
+    #endregion
 
     #region Core
     private DataManager _data = new DataManager();
@@ -18,12 +30,12 @@ public class Managers : MonoBehaviour
     public static PoolManager Pool { get { return Instance?._pool; } }
     public static ResourceManager Resource { get { return Instance?._resource; } }
     public static UIManager UI { get { return Instance?._ui; } }
-    public static SceneManagerEx Scene { get { return Instance?._scene;} } 
+    public static SceneManagerEx Scene { get { return Instance?._scene; } }
     #endregion
-    
+
     public static void Init()
     {
-        if (s_instacnce == null)
+		if (s_instance == null && Initialized == false)
         {
             GameObject go = GameObject.Find("@Managers");
             if (go == null)
@@ -35,8 +47,15 @@ public class Managers : MonoBehaviour
             DontDestroyOnLoad(go);
 
             //초기화
-            s_instacnce = go.GetComponent<Managers>();
+            s_instance = go.GetComponent<Managers>();
         }
     }
 
+    public static void Clear()
+    {
+        Scene.Clear();
+        UI.Clear();
+        Object.Clear();
+        Pool.Clear();
+    }
 }

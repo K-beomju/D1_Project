@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class Util
 {
-    public static T GetOrAddComponent<T>(GameObject go) where T : UnityEngine.Component
+    public static T GetOrAddComponent<T>(this GameObject go) where T : UnityEngine.Component
     {
         T component = go.GetComponent<T>();
         if (component == null)
@@ -13,7 +13,7 @@ public static class Util
         return component;
     }
 
-    public static GameObject FindChild(GameObject go, string name = null, bool recursive = false)
+    public static GameObject FindChild(this GameObject go, string name = null, bool recursive = false)
     {
         Transform transform = FindChild<Transform>(go, name, recursive);
         if (transform == null)
@@ -51,6 +51,16 @@ public static class Util
 
         return null;
     }
+
+    public static Vector3 GetRandomPositionWithinRadius(Vector3 center, float radius)
+    {
+        float angle = Random.Range(0f, Mathf.PI * 2);
+        float distance = Random.Range(0f, radius);
+        Vector3 position = new Vector3(center.x + Mathf.Cos(angle) * distance, center.y, center.z + Mathf.Sin(angle) * distance);
+
+        return position;
+    }
+
 
 
 }

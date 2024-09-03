@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UI_TitleScene : UI_Scene
 {
@@ -25,7 +27,7 @@ public class UI_TitleScene : UI_Scene
         GetObject((int)GameObjects.StartImage).BindEvent((evt) =>
         {
             Debug.Log("ChangeScene");
-            Managers.Scene.LoadScene(Define.EScene.GameScene);
+            //Managers.Scene.LoadScene(Define.EScene.GameScene);
         });
 
         GetObject((int)GameObjects.StartImage).gameObject.SetActive(false);
@@ -48,8 +50,12 @@ public class UI_TitleScene : UI_Scene
                 
                 GetObject((int)GameObjects.StartImage).gameObject.SetActive(true);
                 GetText((int)Texts.DisplayText).text = $"Touch to Start";
+
+                Managers.Scene.LoadScene(Define.EScene.GameScene);
+                //Debug.LogWarning(Managers.Resource.Load<Sprite>("Weapon.atlas[weapons__0(Clone)]") == null);
             }
         });
     }
+
  
 }

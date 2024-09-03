@@ -335,6 +335,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1167895467215689257, guid: 9e9dcc79810f843cda38a67d5ca8c43a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2868286477069621945, guid: 9e9dcc79810f843cda38a67d5ca8c43a, type: 3}
       propertyPath: m_Name
       value: UI_TitleScene
@@ -418,6 +422,14 @@ PrefabInstance:
     - target: {fileID: 3300306857972305394, guid: 9e9dcc79810f843cda38a67d5ca8c43a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4574359232970842600, guid: 9e9dcc79810f843cda38a67d5ca8c43a, type: 3}
+      propertyPath: a
+      value: 
+      objectReference: {fileID: 4015950162624000524, guid: a10f9ccdc32b94cd58fa43f0b78628c6, type: 3}
+    - target: {fileID: 5319184090480973809, guid: 9e9dcc79810f843cda38a67d5ca8c43a, type: 3}
+      propertyPath: m_Color.a
+      value: 0.7372549
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

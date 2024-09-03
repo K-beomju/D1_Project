@@ -10,12 +10,7 @@ using System.ComponentModel;
 using System.Linq;
 using Data;
 
-// 실습 
-[Serializable]
-public class MyClass
-{
-    public int myField = 42;
-}
+
 
 public class DataTransformer : EditorWindow
 {
@@ -23,9 +18,10 @@ public class DataTransformer : EditorWindow
     [MenuItem("Tools/ParseExcel %#K")]
     public static void ParseExcelDataToJson()
     {
-        ParseExcelDataToJson<TestDataLoader, TestData>("Test");
+        ParseExcelDataToJson<HeroInfoDataLoader, HeroInfoData>("HeroInfo");
         Debug.Log("DataTransformer Completed");
     }
+
 
     #region Helpers
     /// 1. where Loader : new()
