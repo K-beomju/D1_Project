@@ -140,6 +140,11 @@ public class MapManager
         Debug.LogWarning("모든 타일의 영웅이 가득 참");
         return true;
     }
+
+    public Tile GetLastTile()
+    {
+        return heroMapDic.Last().Key;
+    }
     #endregion
 
 }

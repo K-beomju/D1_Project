@@ -21,10 +21,17 @@ public class UI_GameScene : UI_Scene
 
     private void OnSpawnHeroButtonClick()
     {
-        int RandNormalHeroId = HERO_BANDIT_ID + Random.Range(0, 2);
+      int RandNormalHeroId = HERO_BANDIT_ID + Random.Range(0, 2);
 
         if (Managers.Map.IsFull(RandNormalHeroId))
+        {
+            Tile lastTile = Managers.Map.GetLastTile();
+            if(!lastTile.IsFull && lastTile.heroes[0].DataTemplateID != RandNormalHeroId)
+            {
+                Managers.Object.Spawn<Hero>(Vector2.zero, lastTile.heroes[0].DataTemplateID);
+            }
             return;
+        }
 
         Managers.Object.Spawn<Hero>(Vector2.zero, RandNormalHeroId);
     }
