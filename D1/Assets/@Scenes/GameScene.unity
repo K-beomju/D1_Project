@@ -152,7 +152,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fd70eb5d960c4cc3818d72b0559a4b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _detectionDelay: 0.2
+  _detectionDelay: 0.02
+  _monsterSpawnDelay: 0.5
+  _startGameDelay: 1
 --- !u!4 &1157139702
 Transform:
   m_ObjectHideFlags: 0

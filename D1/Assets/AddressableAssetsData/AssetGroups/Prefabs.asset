@@ -23,14 +23,32 @@ MonoBehaviour:
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: d52d60f2929774b9597f0086363a0707
-    m_Address: Monster
+  - m_GUID: 800bd6b6d8083454396453abe6bfca21
+    m_Address: Tile
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 800bd6b6d8083454396453abe6bfca21
-    m_Address: Tile
+  - m_GUID: 796800444041743ddab603ad8cdc5433
+    m_Address: Bandit
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 413052833bf374e6d9355c03caa0a940
+    m_Address: Archer
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b879071d4dacd4d03bb51130f31d4112
+    m_Address: DamageFont
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3c5485e43ec1b4012ab01099993f9437
+    m_Address: Monster
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad

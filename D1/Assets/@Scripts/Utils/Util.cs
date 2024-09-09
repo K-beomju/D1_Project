@@ -62,5 +62,16 @@ public static class Util
     }
 
 
+    public static Color HexToColor(string color)
+    {
+        if (color.Contains("#") == false)
+            color = $"#{color}";
+
+        ColorUtility.TryParseHtmlString(color, out Color parsedColor);
+
+        return parsedColor;
+    }
+
+
 
 }

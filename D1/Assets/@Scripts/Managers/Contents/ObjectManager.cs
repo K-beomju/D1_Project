@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Pool;
 using static Define;
 
 // 스폰과 디스폰 기능, 컨테이너를 리스트로 할 것이냐, 
@@ -27,6 +28,13 @@ public class ObjectManager
 
     #endregion
 
+	public void ShowDamageFont(Vector2 position, float damage, Transform parent, bool isCritical = false)
+	{
+		GameObject go = Managers.Resource.Instantiate("DamageFont", pooling: true);
+		DamageFont damageText = go.GetComponent<DamageFont>();
+		damageText.SetInfo(position, damage, parent, isCritical);
+	}
+
     public T Spawn<T>(Vector2 position, int templateId) where T : BaseObject
     {
         string prefabName = typeof(T).Name;
@@ -51,7 +59,7 @@ public class ObjectManager
         }
         else if (obj.ObjectType == EObjectType.Monster)
         {
-            obj.transform.parent = HeroRoot;
+            obj.transform.parent = MonsterRoot;
             Monster monster = go.GetComponent<Monster>();
             Monsters.Add(monster);
             monster.SetInfo(templateId);

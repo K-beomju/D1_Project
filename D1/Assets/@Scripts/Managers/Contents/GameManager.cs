@@ -30,12 +30,19 @@ public class GameManager
 
 
     #region MonsterSpawn
-    public void SpawnMonster(bool isBoss = false)
+
+    public IEnumerator SpawnMonsterCo(float spawnDelay, int spawnCount, bool isBoss = false)
     {
-        if (WayPoints == null)
-            return;
-            
-        Managers.Object.Spawn<Monster>(WayPoints[0].transform.position, 0);
+         if (WayPoints == null)
+            yield return null;
+
+        WaitForSeconds spawnWait = new WaitForSeconds(spawnDelay);
+
+        for (int i = 0; i < spawnCount; i++)
+        {
+            Managers.Object.Spawn<Monster>(WayPoints[0].transform.position, 0);
+            yield return spawnWait;
+        }
     }
 
     #endregion

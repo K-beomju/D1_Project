@@ -1,8 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
-
 
 internal class Pool
 {
@@ -10,7 +8,8 @@ internal class Pool
     private IObjectPool<GameObject> _pool;
 
     private Transform _root;
-    public Transform Root
+
+    private Transform Root
     {
         get
         {
@@ -27,13 +26,21 @@ internal class Pool
     public Pool(GameObject prefab)
     {
         _prefab = prefab;
-        _pool = new ObjectPool<GameObject>(OnCreate, OnGet, OnRelease, OnDestroy);
+        _pool = new ObjectPool<GameObject>(OnCreate, OnGet, OnRelease, OnDestroy, false, 5, 10);
     }
 
     public void Push(GameObject go)
     {
-        if (go.activeSelf)
-            _pool.Release(go);
+        Debug.Log("ASdasdasdasdsa");
+        if(go.activeSelf)
+    {
+        _pool.Release(go);
+        Debug.Log($"Object {go.name} returned to pool");
+    }
+    else
+    {
+        Debug.LogWarning($"Object {go.name} is already inactive and cannot be returned");
+    }
     }
 
     public GameObject Pop()
@@ -41,7 +48,8 @@ internal class Pool
         return _pool.Get();
     }
 
-    #region Func
+    #region Funcs
+
     private GameObject OnCreate()
     {
         GameObject go = GameObject.Instantiate(_prefab);
@@ -57,6 +65,7 @@ internal class Pool
 
     private void OnRelease(GameObject go)
     {
+        go.transform.SetParent(Root);
         go.SetActive(false);
     }
 
@@ -65,39 +74,37 @@ internal class Pool
         GameObject.Destroy(go);
     }
     #endregion
-
 }
-
 
 public class PoolManager
 {
-    private Dictionary<string, Pool> _pool = new Dictionary<string, Pool>();
+    private Dictionary<string, Pool> _pools = new Dictionary<string, Pool>();
 
     public GameObject Pop(GameObject prefab)
     {
-        if (_pool.ContainsKey(prefab.name) == false)
+        if (_pools.ContainsKey(prefab.name) == false)
             CreatePool(prefab);
 
-        return _pool[prefab.name].Pop();
+        return _pools[prefab.name].Pop();
     }
 
     public bool Push(GameObject go)
     {
-        if (_pool.ContainsKey(go.name) == false)
+        if (_pools.ContainsKey(go.name) == false)
             return false;
 
-        _pool[go.name].Push(go);
+        _pools[go.name].Push(go);
         return true;
     }
 
     public void Clear()
     {
-        _pool.Clear();
+        _pools.Clear();
     }
 
     private void CreatePool(GameObject original)
     {
         Pool pool = new Pool(original);
-        _pool.Add(original.name, pool);
+        _pools.Add(original.name, pool);
     }
 }

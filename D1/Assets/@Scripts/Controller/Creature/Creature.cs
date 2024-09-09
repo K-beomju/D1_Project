@@ -117,6 +117,22 @@ public class Creature : BaseObject
 
     #endregion
 
+
+    
+	#region Battle
+	public virtual void OnDamaged(BaseObject attacker)
+	{
+		
+	}
+
+	public virtual void OnDead(BaseObject attacker)
+	{
+
+	}
+	#endregion
+
+
+
     #region Wait
 
     protected Coroutine _coWait;

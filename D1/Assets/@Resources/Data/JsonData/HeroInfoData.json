@@ -2,16 +2,16 @@
   "heroes": [
     {
       "DataId": 201001,
-      "Name": "Archer",
+      "Name": "Bandit",
       "AnimName": "Hero_Bandit",
       "Atk": 100.0,
       "AtkSpeed": 1.0,
-      "AtkRange": 0.75,
+      "AtkRange": 1.0,
       "AtkDelay": 1.0
     },
     {
       "DataId": 201002,
-      "Name": "Bandit",
+      "Name": "Archer",
       "AnimName": "Hero_Archer",
       "Atk": 50.0,
       "AtkSpeed": 1.0,

@@ -16,9 +16,8 @@ public class Hero : Creature
     #region Config
     public HeroInfoData HeroInfo { get; private set; }
     public Creature Target { get; set; }
-    public SpriteRenderer Hand { get; set;}
-    public SpriteRenderer Weapon { get; set;}
-
+    public SpriteRenderer Hand { get; set; }
+    public SpriteRenderer Weapon { get; set; }
     #endregion
 
     public override bool Init()
@@ -27,7 +26,7 @@ public class Hero : Creature
             return false;
 
         ObjectType = EObjectType.Hero;
-        Hand = transform.GetChild(0).GetComponent<SpriteRenderer>();   
+        Hand = transform.GetChild(0).GetComponent<SpriteRenderer>();
         Hand.sortingOrder = SortingLayers.HAND;
         Weapon = Hand.transform.GetChild(0).GetComponent<SpriteRenderer>();
         Weapon.sortingOrder = SortingLayers.WEAPON;
@@ -44,7 +43,7 @@ public class Hero : Creature
         AtkRange = HeroInfo.AtkRange;
         AtkDelay = HeroInfo.AtkDelay;
         #endregion
-
+        Debug.Log(AtkRange);
     }
 
     #region Anim
@@ -56,10 +55,7 @@ public class Hero : Creature
                 PlayAnimation(AnimName.IDLE, EAnimType.Bool, true);
                 break;
             case ECreatureState.Move:
-                PlayAnimation(AnimName.MOVE,EAnimType.Bool, true);
-                break;
-            case ECreatureState.Attack:
-                PlayAnimation(AnimName.ATTACK, EAnimType.SetTrigger, true);
+                PlayAnimation(AnimName.MOVE, EAnimType.Bool, true);
                 break;
         }
     }
@@ -89,17 +85,20 @@ public class Hero : Creature
 
     protected override void UpdateAttack()
     {
+        if(_coWait != null)
+         return;
+
         // 이동 중 일때 공격 x
         if (CreatureState == ECreatureState.Move)
             return;
 
-        // 공격 쿨타임, 타겟 없을 때
-        if (_coWait != null || Target.IsValid() == false)
+        if (Target.IsValid() == false)
         {
             // 기다릴 땐 IDLE 실행
             CreatureState = ECreatureState.Idle;
             return;
         }
+        
 
         Vector3 dir = (Target.CenterPosition - CenterPosition);
         if (dir.sqrMagnitude > AtkRange * AtkRange)
@@ -108,24 +107,22 @@ public class Hero : Creature
             Target = null;
             return;
         }
-        Debug.Log("제대로 되는지 확인");
+
+
+        PlayAnimation(AnimName.ATTACK, EAnimType.SetTrigger, true);
         LookAtTarget(Target);
         StartWait(AtkDelay);
     }
     #endregion
 
-    
-   
 
-    
-	public override void OnAnimEventHandler()
-	{
-		// Skill
-		if (Target.IsValid() == false)
-			return;
+    public override void OnAnimEventHandler()
+    {
+        if (Target.IsValid() == false)
+            return;
 
-		//Target.OnDamaged(this);
-	}
+        Target.OnDamaged(this);
+    }
 
     void OnDrawGizmos()
     {

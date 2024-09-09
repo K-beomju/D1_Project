@@ -20,9 +20,12 @@ public class GameScene : BaseScene
     }
 
     [SerializeField] private float _detectionDelay = 0.2f;
+    [SerializeField] private float _monsterSpawnDelay = 0.5f;
+    [SerializeField] private int _startGameDelay = 1;
+
     private Coroutine _detectionCoroutine;
 
-     private IEnumerator _currentCoroutine = null;
+    private IEnumerator _currentCoroutine = null;
     private void SwitchCoroutine()
     {
         IEnumerator coroutine = null;
@@ -65,9 +68,9 @@ public class GameScene : BaseScene
         //TODO
         Managers.Map.LoadMap();
         Managers.UI.ShowSceneUI<UI_GameScene>();
-                
-        //GameSceneState = EGameSceneState.Play;
-        
+
+        GameSceneState = EGameSceneState.Play;
+
 
         if (_detectionCoroutine == null)
         {
@@ -89,13 +92,12 @@ public class GameScene : BaseScene
         }
     }
 
-      private IEnumerator CoPlayStage()
+    private IEnumerator CoPlayStage()
     {
-        while (true)
-        {
-            Managers.Game.SpawnMonster(false);
-            yield return new WaitForSeconds(0.5f);
-        }
+        WaitForSeconds startWait = new WaitForSeconds(_startGameDelay);
+        yield return startWait;
+
+        StartCoroutine(Managers.Game.SpawnMonsterCo(_monsterSpawnDelay, 10, false));
     }
 
     private IEnumerator CoPauseStage()
@@ -117,7 +119,7 @@ public class GameScene : BaseScene
         //         yield return null;
         //     }
 
-             yield return null;
+        yield return null;
         // }
     }
 
