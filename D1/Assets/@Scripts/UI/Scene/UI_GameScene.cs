@@ -10,10 +10,12 @@ public class UI_GameScene : UI_Scene
         SpawnHeroButton
     }
 
+
     public override bool Init()
     {
         if (base.Init() == false)
             return false;
+
         BindButtons(typeof(Buttons));
         GetButton((int)Buttons.SpawnHeroButton).onClick.AddListener(OnSpawnHeroButtonClick);
         return true;

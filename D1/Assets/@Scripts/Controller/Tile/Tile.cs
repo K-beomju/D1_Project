@@ -6,12 +6,15 @@ using static Define;
 public class Tile : BaseObject
 {
     public List<Hero> heroes { get; set; } = new List<Hero>();
+    private Color originColor;
 
     public override bool Init()
     {
         if (base.Init() == false)
             return false;
 
+        Sprite.enabled = false;
+        originColor = Sprite.color;
         Sprite.sortingOrder = SortingLayers.TILE;
         return true;
     }
@@ -37,7 +40,7 @@ public class Tile : BaseObject
     }
 
     private Vector3 GetHeroPosition(int index)
-    {               
+    {
         return transform.position + TileInfo.HeroPositions[index];
     }
 

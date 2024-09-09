@@ -16,6 +16,8 @@ public class Monster : Creature
     private int wavepointIndex = 0;
     private bool isSpawn = true;
 
+    protected UI_HPBar hpBar;
+
     public override bool Init()
     {
         if (base.Init() == false)
@@ -34,6 +36,11 @@ public class Monster : Creature
         WayPoints = Managers.Game.WayPoints;
         wavepointIndex = 0;
         destination = WayPoints[wavepointIndex];
+
+        GameObject obj = Managers.Resource.Instantiate("UI_HPBar", (Managers.UI.SceneUI as UI_GameScene).transform, pooling: false);
+        obj.gameObject.SetActive(false);
+        hpBar = obj.GetComponent<UI_HPBar>();
+        hpBar.SetInfo(this, MaxHp);
     }
 
     #region Anim
@@ -50,6 +57,15 @@ public class Monster : Creature
         }
     }
     #endregion
+
+    void LateUpdate()
+    {
+        // HP 바의 위치를 업데이트
+        if (hpBar != null)
+        {
+            hpBar.UpdatePosition();
+        }
+    }
 
     #region AI
 
@@ -99,7 +115,7 @@ public class Monster : Creature
 
 		float finalDamage = hero.Atk; // TODO
 		Hp = Mathf.Clamp(Hp - finalDamage, 0, MaxHp);
-
+        hpBar.Refresh(Hp);
         Managers.Object.ShowDamageFont(CenterPosition, finalDamage, transform, false);
 
 
@@ -115,6 +131,7 @@ public class Monster : Creature
         base.OnDead(attacker);
 
 		// TODO : Drop Item
+        Managers.Resource.Destroy(hpBar.gameObject);
 		Managers.Object.Despawn(this);
 	}
 	#endregion

@@ -55,10 +55,9 @@ public class ResourceManager
 
 		if (pooling)
 		{
-			Debug.Log("왜 안뎀:");
 			return Managers.Pool.Pop(prefab);
 		}
-		
+
 		GameObject go = Object.Instantiate(prefab, parent);
 		go.name = prefab.name;
 

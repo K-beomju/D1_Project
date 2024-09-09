@@ -28,6 +28,7 @@ public class ObjectManager
 
     #endregion
 
+
 	public void ShowDamageFont(Vector2 position, float damage, Transform parent, bool isCritical = false)
 	{
 		GameObject go = Managers.Resource.Instantiate("DamageFont", pooling: true);

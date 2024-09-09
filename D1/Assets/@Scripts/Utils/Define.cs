@@ -117,6 +117,10 @@ public static class Define
     }
     #endregion
 
+
+    public static readonly Vector2 TRAIL_POS = new Vector2(0, -2.65f);
+
+
     public const int HERO_BANDIT_ID = 201001;
     public const int HERO_ARCHER_ID = 201002;
 

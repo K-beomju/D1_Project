@@ -31,16 +31,8 @@ internal class Pool
 
     public void Push(GameObject go)
     {
-        Debug.Log("ASdasdasdasdsa");
-        if(go.activeSelf)
-    {
-        _pool.Release(go);
-        Debug.Log($"Object {go.name} returned to pool");
-    }
-    else
-    {
-        Debug.LogWarning($"Object {go.name} is already inactive and cannot be returned");
-    }
+        if (go.activeSelf)
+            _pool.Release(go);
     }
 
     public GameObject Pop()
