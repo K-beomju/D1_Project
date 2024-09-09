@@ -5,7 +5,6 @@ using static Define;
 
 public class Creature : BaseObject
 {
-    public ECreatureType CreatureType { get; protected set; }
     public Animator Anim { get; protected set; }
 
     protected ECreatureState _creatureState = ECreatureState.None;
@@ -28,7 +27,6 @@ public class Creature : BaseObject
             return false;
 
         Anim = GetComponent<Animator>();
-        ObjectType = EObjectType.Creature;
         Sprite.sortingOrder = SortingLayers.CREATURE;
         return true;
     }

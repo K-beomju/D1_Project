@@ -33,19 +33,13 @@ public static class Define
     }
 
     public enum EObjectType
-    {
-        None,
-        Creature,
-        Projectile,
-    }
-
-    public enum ECreatureType
-    {
-        None,
-        Hero,
-        Monster,
-        BossMonster
-    }
+	{
+		None,
+		Hero,
+		Monster,
+		Projectile,
+		Effect
+	}
 
     public enum ECreatureState
     {
@@ -131,9 +125,10 @@ public static class Define
     public static class SortingLayers 
     {
         public const int TILE = 100;
-        public const int WEAPON = 299;
+
+        public const int WEAPON = 298;
+        public const int HAND = 299;
         public const int CREATURE = 300;
-        public const int HAND = 301;
 
         public const int PROJECTILE = 310;
         public const int SKILL_EFFECT = 315;
@@ -152,8 +147,8 @@ public static class Define
     {
         public static readonly Vector3[] HeroPositions = {
             new Vector3(0.1f, -0.05f, 0),
-            new Vector3(-0.1f, 0.05f, 0),
-            new Vector3(-0.1f, -0.15f, 0)
+            new Vector3(-0.05f, 0.05f, 0),
+            new Vector3(-0.05f, -0.15f, 0)
         };
     }
 }

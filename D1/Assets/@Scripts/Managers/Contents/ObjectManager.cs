@@ -10,7 +10,6 @@ public class ObjectManager
     //리스트에 비해서 바로 찾는 게 편리하기 때문에 
     public HashSet<Hero> Heroes = new HashSet<Hero>();
     public HashSet<Monster> Monsters = new HashSet<Monster>();
-    public HashSet<Projectile> Projectiles { get; } = new HashSet<Projectile>();
 
     #region Root
     public Transform GetRootTransform(string name)
@@ -25,46 +24,41 @@ public class ObjectManager
     public Transform HeroRoot { get { return GetRootTransform("@Heroes"); } }
     public Transform MonsterRoot { get { return GetRootTransform("@Monsters"); } }
     public Transform TileRoot { get { return GetRootTransform("@Tiles"); } }
-    public Transform ProjectileRoot { get { return GetRootTransform("@Projectiles"); } }
 
     #endregion
 
     public T Spawn<T>(Vector2 position, int templateId) where T : BaseObject
     {
         string prefabName = typeof(T).Name;
+        if(typeof(T).Name.Contains("Hero"))
+            prefabName = Managers.Data.HeroInfoDic[templateId].Name;
+
 
         GameObject go = Managers.Resource.Instantiate(prefabName);
         go.name = prefabName;
         go.transform.position = position;
 
         BaseObject obj = go.GetComponent<BaseObject>();
-        if (obj.ObjectType == EObjectType.Creature)
+
+        if (obj.ObjectType == EObjectType.Hero)
         {
-            Creature creature = go.GetComponent<Creature>();
+            obj.transform.parent = HeroRoot;
+            Hero hero = go.GetComponent<Hero>();
+            Heroes.Add(hero);
+            hero.SetInfo(templateId);
 
-            switch (creature.CreatureType)
-            {
-                case ECreatureType.Hero:
-                    obj.transform.parent = HeroRoot;
-                    Hero hero = creature as Hero;
-                    Heroes.Add(hero);
-
-                    Managers.Map.PlaceHeroOnTile(hero, templateId);
-                    break;
-                case ECreatureType.Monster:
-                    obj.transform.parent = MonsterRoot;
-                    Monster monster = creature as Monster;
-                    Monsters.Add(monster);
-                    break;
-            }
-            obj.SetInfo(templateId);
+            Managers.Map.PlaceHeroOnTile(hero, templateId);
+        }
+        else if (obj.ObjectType == EObjectType.Monster)
+        {
+            obj.transform.parent = HeroRoot;
+            Monster monster = go.GetComponent<Monster>();
+            Monsters.Add(monster);
+            monster.SetInfo(templateId);
         }
         else if (obj.ObjectType == EObjectType.Projectile)
         {
-            Projectile projectile = go.GetComponent<Projectile>();
-            obj.transform.parent = ProjectileRoot;
-            Projectiles.Add(projectile);
-            projectile.SetInfo(0);
+
         }
         // 왜 갑자기 오브젝트를 T로 
         // 오브젝트는 베이스 오브젝트 T는 베이스 오브젝트를 상속받은 그 무언가 이기 때문에 
@@ -75,24 +69,20 @@ public class ObjectManager
     {
         EObjectType objectType = obj.ObjectType;
 
-        if (obj.ObjectType == EObjectType.Creature)
-        {
-            Creature creature = obj.GetComponent<Creature>();
-            switch (creature.CreatureType)
-            {
-                case ECreatureType.Hero:
-                    Hero hero = creature as Hero;
-                    Heroes.Remove(hero);
-                    break;
-                case ECreatureType.Monster:
-                    Monster monster = creature as Monster;
-                    Monsters.Remove(monster);
-                    break;
-            }
-        }
+		if (obj.ObjectType == EObjectType.Hero)
+		{
+			Hero hero = obj.GetComponent<Hero>();
+			Heroes.Remove(hero);
+		}
+		else if (obj.ObjectType == EObjectType.Monster)
+		{
+			Monster monster = obj.GetComponent<Monster>();
+			Monsters.Remove(monster);
+		}
 
         Managers.Resource.Destroy(obj.gameObject);
     }
+
 
     public GameObject SpawnTile(Vector3 position, string prefabName)
     {

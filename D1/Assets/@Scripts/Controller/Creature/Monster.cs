@@ -10,7 +10,7 @@ public class Monster : Creature
         if(base.Init() == false)
         return false;
 
-        CreatureType = Define.ECreatureType.Monster;
+        ObjectType = EObjectType.Monster;
         return true;
     }
 

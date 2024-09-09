@@ -16,14 +16,21 @@ public class Hero : Creature
     #region Config
     public HeroInfoData HeroInfo { get; private set; }
     public Creature Target { get; set; }
-    public Sprite heroSprite;
+    public SpriteRenderer Hand { get; set;}
+    public SpriteRenderer Weapon { get; set;}
+
     #endregion
 
     public override bool Init()
     {
         if (base.Init() == false)
             return false;
-        CreatureType = ECreatureType.Hero;
+
+        ObjectType = EObjectType.Hero;
+        Hand = transform.GetChild(0).GetComponent<SpriteRenderer>();   
+        Hand.sortingOrder = SortingLayers.HAND;
+        Weapon = Hand.transform.GetChild(0).GetComponent<SpriteRenderer>();
+        Weapon.sortingOrder = SortingLayers.WEAPON;
         return true;
     }
 
@@ -38,7 +45,6 @@ public class Hero : Creature
         AtkDelay = HeroInfo.AtkDelay;
         #endregion
 
-        Anim.runtimeAnimatorController = Managers.Resource.Load<RuntimeAnimatorController>(HeroInfo.AnimName);
     }
 
     #region Anim
@@ -65,7 +71,7 @@ public class Hero : Creature
     {
         if (Target.IsValid())
         {
-            if (Target.CreatureType == ECreatureType.Monster)
+            if (Target.ObjectType == EObjectType.Monster)
             {
                 CreatureState = ECreatureState.Attack;
                 return;
@@ -102,7 +108,6 @@ public class Hero : Creature
             Target = null;
             return;
         }
-        GenerateProjectile(transform.position);
         Debug.Log("제대로 되는지 확인");
         LookAtTarget(Target);
         StartWait(AtkDelay);
@@ -110,31 +115,7 @@ public class Hero : Creature
     #endregion
 
     
-    protected void GenerateProjectile(Vector3 spawnPos)
-    {
-        Projectile projectile = Managers.Object.Spawn<Projectile>(spawnPos, 0);
-
-        LayerMask excludeMask = 0;
-        // excludeMask.AddLayer(ELayer.Default);
-        // excludeMask.AddLayer(ELayer.Projectile);
-
-        // switch (CreatureType)
-        // {
-        //     case ECreatureType.Tank:
-        //     case ECreatureType.Hero:
-        //     case ECreatureType.TankAddOn:
-        //     case ECreatureType.Summon:
-        //         excludeMask.AddLayer(ELayer.Tank);
-        //         excludeMask.AddLayer(ELayer.Hero);
-        //         break;
-        //     case ECreatureType.Monster:
-        //     case ECreatureType.BossMonster:
-        //         excludeMask.AddLayer(ELayer.Monster);
-        //         break;
-        // }
-
-        projectile.SetSpawnInfo(this, excludeMask);
-    }
+   
 
     
 	public override void OnAnimEventHandler()
