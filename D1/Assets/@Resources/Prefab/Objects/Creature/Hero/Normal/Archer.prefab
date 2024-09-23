@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 711257452810426171}
   - component: {fileID: 6698339486801543079}
   - component: {fileID: 7953076367229658823}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Archer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -156,6 +156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b18557d65c8f4ec19977061d58806b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ProjectileID: 70001
 --- !u!1 &6922126386903364792
 GameObject:
   m_ObjectHideFlags: 0
@@ -166,7 +167,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6865064503421117995}
   - component: {fileID: 7806982092856336287}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -250,7 +251,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1457867671424116218}
   - component: {fileID: 1989014745410334097}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}

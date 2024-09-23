@@ -1,0 +1,3 @@
+DataId,Name,ComponentName,PrefabName,ProjSpeed
+70001,궁수 화살,Parabola,ArcherProjectile,8
+70002,일반 창,Straight,SpearProjectile,10

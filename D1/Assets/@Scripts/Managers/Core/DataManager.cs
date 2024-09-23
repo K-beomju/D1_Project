@@ -13,10 +13,12 @@ public interface ILoader<Key, Value>
 public class DataManager
 {
     public Dictionary<int, HeroInfoData> HeroInfoDic { get; private set; } = new Dictionary<int, HeroInfoData>();
+    public Dictionary<int, ProjectileData> ProjectileDic { get; private set; } = new Dictionary<int, ProjectileData>();
 
     public void Init()
     {
         HeroInfoDic = LoadJson<HeroInfoDataLoader, int, HeroInfoData>("HeroInfoData").MakeDict();
+        ProjectileDic = LoadJson<ProjectileDataLoader, int, ProjectileData>("ProjectileData").MakeDict();
     }
 
     private Loader LoadJson<Loader, Key, Value>(string path) where Loader : ILoader<Key, Value>

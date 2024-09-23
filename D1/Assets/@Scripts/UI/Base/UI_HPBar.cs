@@ -34,8 +34,11 @@ public class UI_HPBar : UI_Base
 
     public void Refresh(float hp)
     {
-        gameObject.SetActive(true);
-        _slider.value = hp;
+        if (gameObject != null)
+        {
+            gameObject.SetActive(true);
+            _slider.value = hp;
+        }
     }
 
 

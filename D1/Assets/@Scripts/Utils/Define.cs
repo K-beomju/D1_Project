@@ -73,33 +73,6 @@ public static class Define
     }
 
     #region Projectile
-    public enum EProjectileMotionType
-    {
-        Melee,
-        Horizontal,
-        Straight,
-        Guided,
-        Arc,
-        ArcRotation,
-        ImpactPosition,
-        ImpactMoveStraight,
-        ImpaactMoveArc,
-        Target,
-    }
-
-    public enum EProjectileTargetingType
-    {
-        Single,
-        Multi,
-    }
-
-    public enum EProjectileRemoveType
-    {
-        CollisionTarget,
-        LifeTime,
-        Position,
-        PositionCollisionTarget,
-    }
 
     public enum ELayer
     {
@@ -109,11 +82,10 @@ public static class Define
         Projectile = 9,
     }
 
-    public enum EShootingType
+    public enum EProjetionMotion
     { 
-        None,
-        Fixed,
-        Random,
+        Straight,
+        Parabola
     }
     #endregion
 
@@ -149,6 +121,8 @@ public static class Define
 
     public static class TileInfo
     {
+        public const string TileLayer = "Tile";
+        public const float HeroMoveSpeed = 2f;
         public static readonly Vector3[] HeroPositions = {
             new Vector3(0.1f, -0.05f, 0),
             new Vector3(-0.05f, 0.05f, 0),

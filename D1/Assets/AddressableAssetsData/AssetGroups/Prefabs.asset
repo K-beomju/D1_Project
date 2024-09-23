@@ -59,6 +59,18 @@ MonoBehaviour:
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5be3beb71c86f42ea80566c2e688f4f7
+    m_Address: ArcherProjectile
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 617b924d83d8d4d3f811e5f9d431268d
+    m_Address: SpearProjectile
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 25fea1ea37df2431eb53c6323608ed4a, type: 2}
   m_SchemaSet:

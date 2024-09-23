@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6892363751963945198}
   - component: {fileID: 4967654376569899010}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 140837803887604876}
   - component: {fileID: 2552942656120558496}
   - component: {fileID: 2116452789865748975}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bandit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -241,6 +241,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b18557d65c8f4ec19977061d58806b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ProjectileID: 0
 --- !u!1 &5516249830611363044
 GameObject:
   m_ObjectHideFlags: 0
@@ -251,7 +252,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1500868057832573904}
   - component: {fileID: 5819970424517787579}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sword
   m_TagString: Untagged
   m_Icon: {fileID: 0}

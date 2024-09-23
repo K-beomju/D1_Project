@@ -67,6 +67,7 @@ public class GameScene : BaseScene
 
         //TODO
         Managers.Map.LoadMap();
+        Managers.Object.Init();
         Managers.UI.ShowSceneUI<UI_GameScene>();
 
         GameSceneState = EGameSceneState.Play;

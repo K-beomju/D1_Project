@@ -20,6 +20,8 @@ public class Hero : Creature
     public SpriteRenderer Weapon { get; set; }
     #endregion
 
+    public int ProjectileID = 70001;
+
     public override bool Init()
     {
         if (base.Init() == false)
@@ -52,6 +54,7 @@ public class Hero : Creature
         switch (CreatureState)
         {
             case ECreatureState.Idle:
+                PlayAnimation(AnimName.MOVE, EAnimType.Bool, false);
                 PlayAnimation(AnimName.IDLE, EAnimType.Bool, true);
                 break;
             case ECreatureState.Move:
@@ -115,13 +118,25 @@ public class Hero : Creature
     }
     #endregion
 
-
     public override void OnAnimEventHandler()
     {
         if (Target.IsValid() == false)
             return;
 
-        Target.OnDamaged(this);
+        if(ProjectileID == 0)
+        {
+            Target.OnDamaged(this);
+        }
+        else
+        {
+            GenerateProjectile(CenterPosition);
+        }
+    }
+
+    private void GenerateProjectile(Vector3 spawnPos)
+    {
+        Projectile projectile = Managers.Object.Spawn<Projectile>(spawnPos, ProjectileID);
+        projectile.SetInfo(ProjectileID, this);
     }
 
     void OnDrawGizmos()

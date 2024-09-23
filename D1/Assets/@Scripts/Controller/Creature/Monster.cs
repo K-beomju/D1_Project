@@ -115,6 +115,7 @@ public class Monster : Creature
 
 		float finalDamage = hero.Atk; // TODO
 		Hp = Mathf.Clamp(Hp - finalDamage, 0, MaxHp);
+          if (hpBar != null)
         hpBar.Refresh(Hp);
         Managers.Object.ShowDamageFont(CenterPosition, finalDamage, transform, false);
 

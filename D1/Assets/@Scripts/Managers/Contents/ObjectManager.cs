@@ -11,6 +11,9 @@ public class ObjectManager
     //리스트에 비해서 바로 찾는 게 편리하기 때문에 
     public HashSet<Hero> Heroes = new HashSet<Hero>();
     public HashSet<Monster> Monsters = new HashSet<Monster>();
+    public HashSet<Projectile> Projectiles = new HashSet<Projectile>();
+
+    public InteractionHandler Handler { get; set; }
 
     #region Root
     public Transform GetRootTransform(string name)
@@ -25,23 +28,33 @@ public class ObjectManager
     public Transform HeroRoot { get { return GetRootTransform("@Heroes"); } }
     public Transform MonsterRoot { get { return GetRootTransform("@Monsters"); } }
     public Transform TileRoot { get { return GetRootTransform("@Tiles"); } }
+    public Transform ProjectileRoot { get { return GetRootTransform("@ProjectileRoots"); } }
 
     #endregion
 
+    public void Init()
+    {
+        GameObject go = Managers.Resource.Instantiate("InteractionHandler");
+        go.transform.position = Vector3.zero;
+        go.name = "***Handler***";
+        Handler = go.GetOrAddComponent<InteractionHandler>();
+    }
 
-	public void ShowDamageFont(Vector2 position, float damage, Transform parent, bool isCritical = false)
-	{
-		GameObject go = Managers.Resource.Instantiate("DamageFont", pooling: true);
-		DamageFont damageText = go.GetComponent<DamageFont>();
-		damageText.SetInfo(position, damage, parent, isCritical);
-	}
+
+    public void ShowDamageFont(Vector2 position, float damage, Transform parent, bool isCritical = false)
+    {
+        GameObject go = Managers.Resource.Instantiate("DamageFont", pooling: true);
+        DamageFont damageText = go.GetComponent<DamageFont>();
+        damageText.SetInfo(position, damage, parent, isCritical);
+    }
 
     public T Spawn<T>(Vector2 position, int templateId) where T : BaseObject
     {
         string prefabName = typeof(T).Name;
-        if(typeof(T).Name.Contains("Hero"))
+        if (typeof(T).Name.Contains("Hero"))
             prefabName = Managers.Data.HeroInfoDic[templateId].Name;
-
+        else if (typeof(T).Name.Contains("Projectile"))
+            prefabName = Managers.Data.ProjectileDic[templateId].PrefabName;
 
         GameObject go = Managers.Resource.Instantiate(prefabName);
         go.name = prefabName;
@@ -55,7 +68,6 @@ public class ObjectManager
             Hero hero = go.GetComponent<Hero>();
             Heroes.Add(hero);
             hero.SetInfo(templateId);
-
             Managers.Map.PlaceHeroOnTile(hero, templateId);
         }
         else if (obj.ObjectType == EObjectType.Monster)
@@ -67,7 +79,9 @@ public class ObjectManager
         }
         else if (obj.ObjectType == EObjectType.Projectile)
         {
-
+            obj.transform.parent = ProjectileRoot;
+            Projectile projectile = go.GetComponent<Projectile>();
+            Projectiles.Add(projectile);
         }
         // 왜 갑자기 오브젝트를 T로 
         // 오브젝트는 베이스 오브젝트 T는 베이스 오브젝트를 상속받은 그 무언가 이기 때문에 
@@ -78,16 +92,21 @@ public class ObjectManager
     {
         EObjectType objectType = obj.ObjectType;
 
-		if (obj.ObjectType == EObjectType.Hero)
-		{
-			Hero hero = obj.GetComponent<Hero>();
-			Heroes.Remove(hero);
-		}
-		else if (obj.ObjectType == EObjectType.Monster)
-		{
-			Monster monster = obj.GetComponent<Monster>();
-			Monsters.Remove(monster);
-		}
+        if (obj.ObjectType == EObjectType.Hero)
+        {
+            Hero hero = obj.GetComponent<Hero>();
+            Heroes.Remove(hero);
+        }
+        else if (obj.ObjectType == EObjectType.Monster)
+        {
+            Monster monster = obj.GetComponent<Monster>();
+            Monsters.Remove(monster);
+        }
+        else if (obj.ObjectType == EObjectType.Projectile)
+        {
+            Projectile projectile = obj.GetComponent<Projectile>();
+            Projectiles.Remove(projectile);
+        }
 
         Managers.Resource.Destroy(obj.gameObject);
     }

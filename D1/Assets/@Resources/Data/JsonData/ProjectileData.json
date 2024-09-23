@@ -1,0 +1,18 @@
+{
+  "projectiles": [
+    {
+      "DataId": 70001,
+      "Name": "궁수 화살",
+      "ProjectileMotion": 1,
+      "PrefabName": "ArcherProjectile",
+      "ProjSpeed": 8
+    },
+    {
+      "DataId": 70002,
+      "Name": "일반 창",
+      "ProjectileMotion": 0,
+      "PrefabName": "SpearProjectile",
+      "ProjSpeed": 10
+    }
+  ]
+}

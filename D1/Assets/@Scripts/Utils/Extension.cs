@@ -25,4 +25,10 @@ public static class Extension
 
         return true;
     }
+
+    
+    public static void AddLayer(this ref LayerMask mask, Define.ELayer layer)
+    {
+        mask |= (1 << (int)layer);
+    }
 }

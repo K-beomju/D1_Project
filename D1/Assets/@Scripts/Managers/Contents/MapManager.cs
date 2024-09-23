@@ -90,7 +90,6 @@ public class MapManager
         }
     }
 
-    #region Helpers 
     // 영웅을 배치할 수 있는 타일을 찾는 메서드
     public void PlaceHeroOnTile(Hero hero, int templateId)
     {
@@ -122,8 +121,62 @@ public class MapManager
 
     }
 
+    public void AllActiveTile(bool active)
+    {
+        foreach (var map in heroMapDic)
+        {
+            map.Key.SetShowTile(active);
+        }
+    }
+
+    public void MovedHero(Collider2D selectedTile, Collider2D targetTile)
+    {
+
+        // 선택된 타일과 이동할 타일의 타일 객체를 찾기
+        Tile selectedTileObject = GetTile(selectedTile);
+        Tile targetTileObject = GetTile(targetTile);
+
+        if (selectedTileObject == null || targetTileObject == null)
+            return;
+
+        if (!targetTileObject.IsEmpty)
+        {
+            Debug.Log("동시 교체");
+            heroMapDic[selectedTileObject] = targetTileObject.GetHero();
+            heroMapDic[targetTileObject] = selectedTileObject.GetHero();
+
+            List<Hero> selectedHeros = selectedTileObject.heroes.ToList();
+            List<Hero> otherHeros = targetTileObject.heroes.ToList();
+
+            selectedTileObject.heroes.Clear();
+            targetTileObject.heroes.Clear();
+
+            selectedTileObject.heroes = otherHeros;
+            targetTileObject.heroes = selectedHeros;
+
+            selectedTileObject.RefreshHeroPositions(true);
+            targetTileObject.RefreshHeroPositions(true);
+        }
+        else
+        {
+            // 기존 heroMap 업데이트 -> 이동할려는 타일로 
+            heroMapDic[selectedTileObject] = null;
+            heroMapDic[targetTileObject] = selectedTileObject.GetHero();
+
+            // 타일 히어로 데이터 교체
+            List<Hero> selectedHeros = selectedTileObject.heroes.ToList();
+
+            selectedTileObject.heroes.Clear();
+            targetTileObject.heroes = selectedHeros;
+
+            // 위치 업데이트
+            targetTileObject.RefreshHeroPositions(true);
+        }
+    }
 
 
+
+    #region Helpers 
     public bool IsFull(int templateId)
     {
         foreach (var map in heroMapDic)
@@ -145,6 +198,21 @@ public class MapManager
     {
         return heroMapDic.Last().Key;
     }
+
+    public Tile GetTile(Collider2D selectedTile)
+    {
+        foreach (var map in heroMapDic)
+        {
+            if (map.Key.name == selectedTile.name)
+            {
+                Tile tile = map.Key;
+                return tile;
+            }
+        }
+        return null;
+    }
     #endregion
+
+    
 
 }
